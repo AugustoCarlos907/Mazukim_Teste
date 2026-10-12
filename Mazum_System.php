@@ -19,18 +19,14 @@ class Mazukim_System {
     public function index(Request $request)
     {
 
-    $data = $request->validate([
-        'account_id' => 'required|integer',
-        'name' => 'required|string|max:100',
+    $request->validate([
+        'name' => 'nullable|string|max:100',
     ]);
 
-    if(!$data) {
-        return response()->json(['error' => 'Entradas inválidas'], 400);
-    }
-
-    // $user = Auth::user();
-
     $user  = $request->user()->account_id;
+
+
+
     $leads = DB::table('leads')->where('account_id', $user);
 
     if($request->has('name') && !empty($request->input('name'))) {
